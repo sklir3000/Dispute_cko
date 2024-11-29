@@ -6,19 +6,20 @@ from csv import DictReader
 
 admin_file = "Sheet 1_data"
 cko_file = "24-11-18-24-11-25-disputes"
+user_name = "valerijus.kracius"
 
-doc = DocxTemplate('/Users/valerijus.kracius/Documents/new.docx')
+doc = DocxTemplate(f'/Users/{user_name}/Documents/new.docx')
 
-with open(f"/Users/valerijus.kracius/Downloads/{admin_file}.csv", "rb") as file:
+with open(f"/Users/{user_name}/Downloads/{admin_file}.csv", "rb") as file:
     result = chardet.detect(file.read(10000))  # Read a portion of the file to detect encoding
     encoding = result['encoding']
 
-df1 = pd.read_csv(f"/Users/valerijus.kracius/Downloads/{admin_file}.csv", encoding=encoding, delimiter="\t")
-df2 = pd.read_csv(f"/Users/valerijus.kracius/Downloads/{cko_file}.csv")
+df1 = pd.read_csv(f"/Users/{user_name}/Downloads/{admin_file}.csv", encoding=encoding, delimiter="\t")
+df2 = pd.read_csv(f"/Users/{user_name}/Downloads/{cko_file}.csv")
 
 merged_df = pd.merge(df1, df2, left_on='purchase_id', right_on='Reference')
 
-merged_df.to_csv('/Users/valerijus.kracius/Downloads/new_report.csv', index=False)
+merged_df.to_csv(f'/Users/{user_name}/Downloads/new_report.csv', index=False)
 
 data = pd.DataFrame(merged_df)
 
@@ -109,7 +110,7 @@ for index, row in data.iterrows():
         }
 
         doc.render(info)
-        doc.save(f"/Users/valerijus.kracius/Downloads/{row['purchase_id']}_Dispute_summary_{row['action_key']}.docx")
+        doc.save(f"/Users/{user_name}/Downloads/{row['purchase_id']}_Dispute_summary_{row['action_key']}.docx")
 
     else:
         pass
@@ -132,7 +133,7 @@ birlesik = birlesik_fil[['payout_token', 'partner_token', 'sent_date', 'Dispute 
 bluecash_fil = data[(data['outgoing_bank_account_code'] == "pl_bluecash") & (data['breakdown_type'] == "Chargeback (ADJM)")]
 bluecash = bluecash_fil[['payout_token', 'partner_token', 'sent_date', 'Dispute Indicator']]
 
-with open('/Users/valerijus.kracius/Downloads/partner_email.txt','w') as file:
+with open(f'/Users/{user_name}/Downloads/partner_email.txt','w') as file:
     file.write(f"Birlesik:\n")
 
     file.write(f"Hello team, please provide proofs of payments for: \n")
