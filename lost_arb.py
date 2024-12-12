@@ -5,7 +5,7 @@ import chardet
 from csv import DictReader
 
 admin_file = "Sheet 1_data"
-cko_file = "24-11-18-24-11-25-disputes"
+cko_file = "24-12-02-24-12-09-disputes"
 user_name = "valerijus.kracius"
 
 doc = DocxTemplate(f'/Users/{user_name}/Documents/new_arb.docx')
@@ -81,6 +81,8 @@ for index, row in data.iterrows():
             dispute_r = 'General'
         elif dispute_id == '12.5':
             dispute_r = 'Incorrect amount'
+        elif dispute_id == '4841':
+            dispute_r = 'Canceled recurring'
         elif dispute_id == '12.6.1' or dispute_id == '4834':
             dispute_r = 'Duplicate'
         elif dispute_id == '13.5' or dispute_id == '13.3':
